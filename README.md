@@ -12,16 +12,56 @@ npm install --save vuex-react
 
 ## Usage
 
+##### Provider
 ```jsx
-import React, { Component } from 'react'
+import { Provider } from 'vuex-react'
 
-import MyComponent from 'vuex-react'
-import 'vuex-react/dist/index.css'
+const store = {
+  person: {
+    state: {
+      name: 'Jane',
+      age: 19,
+    },
+    actions: {
+      makeHerHappy: ({ dispatch, commit }, params) => {
+        // Make your pickup line...
+      },
+    },
+  },
+}
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+export default () => {
+  return (
+    <Provider store={store}>
+      Your App goes here...
+    </Provider>
+  )
+}
+```
+
+
+##### Then you case the store in your child components like this:
+```jsx
+import { useStore, useGetter, useAction } from 'vuex-react'
+
+export default () => {
+  const [name, setName] = useGetter('person/name')
+  const makeJaneHappy = useAction('person/makeHerHappy')
+  const { state, commit, dispatch } = useStore()
+
+  // Do your stuff
+
+  // name & setName - works as a regular useState, but globally
+  // makeJaneHappy - you can call it likes this: makeJaneHappy() with just one param
+  // state - your global state
+  // commit - can change stuff in your state
+  // dispatch - calls functions in your state
+
+  state.person.name // Jane
+  setName('Jane')
+  makeJaneHappy()
+  commit('person/name', 'Emma')
+  dispatch('person/makeHerHappy', "<Your Params>")
 }
 ```
 

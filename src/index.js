@@ -49,12 +49,27 @@ export const Provider = ({ store: modules, children }) => {
   const { state: generatedState, methods } = generateState(modules)
   const [state, setState] = useState(generatedState)
 
+  const commit = (statePath, newValue) => {
+    const _statePath = statePath.split('/').join('.')
+    const updatedState = _.set(state, _statePath, newValue)
+
+    return setState({ ...updatedState })
+  }
+
+  const dispatch = (actionPath, params) => {
+    const _actionPath = actionPath.split('/').join('.')
+
+    return _.get(methods, _actionPath)({ dispatch, commit }, params)
+  }
+
   return (
     <StoreContext.Provider
       value={{
         state,
         methods,
         updateState: setState,
+        commit,
+        dispatch,
       }}
     >
       {children}

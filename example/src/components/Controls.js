@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react'
-import { useStore, useAction, useGetter } from 'vuex-react'
+import React from 'react'
+import { useAction, useGetter, useStore } from 'vuex-react'
 
 export default () => {
+  const { commit, dispatch } = useStore()
+
   const actions = [
     'jane/makeHerHappy',
     'jane/shootCompliment',
@@ -49,11 +51,28 @@ export default () => {
           const action = useAction(actionPath)
 
           return (
-            <button onClick={action}>
+            <button
+              key={actionPath}
+              onClick={action}
+            >
               {actionPath}
             </button>
           )
         })}
+      </div>
+
+      <div style={{ marginTop: "10px" }}>
+        <button
+          onClick={() => {
+            commit('jane/name', Math.random() > 0.5 ? 'Jane' : 'Jane ❤️')
+          }}
+        >commit random to jane/name</button>
+
+        <button
+          onClick={() => {
+            dispatch('jane/makeHerHappy')
+          }}
+        >dispatch jane/makeHerHappy</button>
       </div>
     </div>
   )

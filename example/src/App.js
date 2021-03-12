@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Provider } from 'vuex-react'
 
 import store from './store'
-import ChildrenComponent from './ChildrenComponent'
-import SecondChildrenComponent from './SecondChildrenComponent'
-import Controls from './Controls'
+import ChildrenComponent from './components/ChildrenComponent'
+import SecondChildrenComponent from './components/SecondChildrenComponent'
+import Controls from './components/Controls'
 
 import './css/prettify.css'
 
 const App = () => {
+  useEffect(() => {
+    document.title = "Vuex React - Example"
+  }, [])
+
   return (
     <Provider store={store}>
       <div className="examples-wrapper">
