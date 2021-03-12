@@ -1,0 +1,68 @@
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+body {
+  padding: 1rem;
+  font: 14px 'PT Sans', Arial, Tahoma;
+}
+
+div.paddings {
+  padding: 2rem;
+  border-radius: 2px;
+}
+
+h2, h3 {
+  margin: 0;
+}
+
+.example-block {
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.examples-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto 1fr;
+  grid-gap: 20px;
+
+  grid-template-areas: "controls controls" "firstChildrenComponent secondChildrenComponent";
+}
+
+.examples-wrapper .area-controls {
+  grid-area: controls;
+}
+
+.examples-wrapper .area-first-component {
+  grid-area: firstChildrenComponent;
+}
+
+.examples-wrapper .area-second-component {
+  grid-area: secondChildrenComponent;
+}
+
+.controls-list {
+  margin-top: 20px;
+
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: 20px;
+
+  width: 100%;
+}
+
+.label {
+  font-size: 1.1rem;
+  color: #666;
+  margin-bottom: 3px;
+}
+
+input {
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid #aaa;
+  font-size: 1rem;
+  width: 400px;
+}
