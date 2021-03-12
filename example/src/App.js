@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { Provider } from 'vuex-react'
 
-import { ExampleComponent } from 'vuex-react'
-import 'vuex-react/dist/index.css'
+import store from './store'
+import ChildrenComponent from './components/ChildrenComponent'
+import SecondChildrenComponent from './components/SecondChildrenComponent'
+import Controls from './components/Controls'
+
+import './css/prettify.css'
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
+  useEffect(() => {
+    document.title = "Vuex React - Example"
+  }, [])
+
+  return (
+    <Provider store={store}>
+      <div className="examples-wrapper">
+        <Controls />
+
+        <ChildrenComponent />
+        <SecondChildrenComponent />
+      </div>
+    </Provider>
+  )
 }
 
 export default App
