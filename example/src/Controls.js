@@ -1,8 +1,11 @@
 import React, { useMemo } from 'react'
-import { useStore } from 'vuex-react'
+import { useStore, useAction, useGetter } from 'vuex-react'
 
 export default () => {
-  const { useGetter } = useStore()
+  const actions = [
+    'jane/makeHerHappy',
+    'jane/shootCompliment',
+  ]
 
   const data = [
     'someModule/someNumber',
@@ -37,6 +40,18 @@ export default () => {
                 onChange={(event) => onChange && onChange(event.target.value)}
               />
             </div>
+          )
+        })}
+      </div>
+
+      <div className="actions-list">
+        {actions.map((actionPath) => {
+          const action = useAction(actionPath)
+
+          return (
+            <button onClick={action}>
+              {actionPath}
+            </button>
           )
         })}
       </div>

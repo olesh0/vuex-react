@@ -23,44 +23,38 @@ const generateState = (modules) => {
   }
 }
 
-const useGetter = ({ statePath, updateValue }) => {
+export const useGetter = (statePath) => {
   try {
-    const { state } = useContext(StoreContext)
+    const { state, updateState } = useContext(StoreContext)
 
-    const splittedPath = statePath.split('/')
-    const value = _.get(state, splittedPath.join('.'))
+    const _statePath = statePath.split('/').join('.')
+    const value = _.get(state, _statePath)
 
     return [
       value,
-      updateValue,
+      (newValue) => updateState({ ..._.set(state, _statePath, newValue) }),
     ]
   } catch (e) {
     throw new Error(`Unknown getter ${statePath}`)
   }
 }
 
+export const useAction = (actionPath) => {
+  const { methods } = useContext(StoreContext)
+
+  return _.get(methods, actionPath.split('/').join('.'))
+}
+
 export const Provider = ({ store: modules, children }) => {
   const { state: generatedState, methods } = generateState(modules)
   const [state, setState] = useState(generatedState)
-
-  const updateValue = ({ statePath, newValue }) => {
-    const _statePath = statePath.split('/').join('.')
-    const updatedState = _.set(state, _statePath, newValue)
-
-    return setState({ ...updatedState })
-  }
 
   return (
     <StoreContext.Provider
       value={{
         state,
-        useGetter: (statePath) => useGetter({
-          statePath,
-          updateValue: (newValue) => updateValue({
-            statePath,
-            newValue,
-          }),
-        }),
+        methods,
+        updateState: setState,
       }}
     >
       {children}
