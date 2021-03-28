@@ -1,6 +1,6 @@
 {
   "name": "vuex-react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Global state manager for React (redux, but vuex like)",
   "author": "olesh0",
   "license": "MIT",
