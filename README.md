@@ -45,6 +45,8 @@ export default () => {
 import { useStore, useGetter, useAction } from 'vuex-react'
 
 export default () => {
+  // you can use . instead of /
+  // e.g. useGetter('person.name')
   const [name, setName] = useGetter('person/name')
   const makeJaneHappy = useAction('person/makeHerHappy')
   const { state, commit, dispatch } = useStore()

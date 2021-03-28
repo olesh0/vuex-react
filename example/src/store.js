@@ -19,7 +19,10 @@ export default {
       makeHerHappy() {
         global.alert(`You're beaufiful, ${NAME}!`)
       },
-      shootCompliment() {
+      shootCompliment(methods, data) {
+        // methods: { dispatch, commit }
+        console.log('action received next args', { methods, data })
+
         const compliments = [
           "You're amazing!",
           "Your positivity is infectious.",
