@@ -76,14 +76,14 @@ export default () => {
   // allows you to get all the methods & state from some module
   // WARNING methods with the same keys as state are going to be overrided by state
   const jane = useModule('jane')
-
-  // constant "jane" is an object that has inside:
   {
     name: 'Jane',
     age: 19,
     makeHerHappy: function,
   }
+
   // you can specify noMerge and then you'll see it like this:
+  const jane = useModule('jane', { noMerge: true })
   {
     state: {
       name: 'Jane',
