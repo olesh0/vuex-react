@@ -5,15 +5,15 @@ export default () => {
   const { commit, dispatch } = useStore()
 
   const actions = [
-    'jane/makeHerHappy',
-    'jane/shootCompliment',
+    'jane.makeHerHappy',
+    'jane.shootCompliment',
   ]
 
   const data = [
-    'someModule/someNumber',
-    'someModule/someOtherNumber',
-    'jane/age',
-    'jane/name',
+    'someModule.someNumber',
+    'someModule.someOtherNumber',
+    'jane.age',
+    'jane.name',
   ]
 
   const controls = data.map((statePath) => {
@@ -53,7 +53,10 @@ export default () => {
           return (
             <button
               key={actionPath}
-              onClick={action}
+              onClick={() => {
+                console.log('action', actionPath)
+                action()
+              }}
             >
               {actionPath}
             </button>

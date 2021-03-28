@@ -15,9 +15,10 @@ npm install --save vuex-react
 ##### Provider
 ```jsx
 import { Provider } from 'vuex-react'
+import App from './App'
 
 const store = {
-  person: {
+  jane: {
     state: {
       name: 'Jane',
       age: 19,
@@ -33,7 +34,7 @@ const store = {
 export default () => {
   return (
     <Provider store={store}>
-      Your App goes here...
+      <App />
     </Provider>
   )
 }
@@ -42,11 +43,21 @@ export default () => {
 
 ##### Then you case the store in your child components like this:
 ```jsx
-import { useStore, useGetter, useAction } from 'vuex-react'
+import React from 'react'
+import {
+  useStore,
+  useGetter,
+  useAction,
+  mapActions,
+  mapGetters,
+  useModule,
+} from 'vuex-react'
 
 export default () => {
-  const [name, setName] = useGetter('person/name')
-  const makeJaneHappy = useAction('person/makeHerHappy')
+  // you can use . instead of /
+  // e.g. useGetter('person.name')
+  const [name, setName] = useGetter('jane/name')
+  const makeJaneHappy = useAction('jane/makeHerHappy')
   const { state, commit, dispatch } = useStore()
 
   // Do your stuff
@@ -57,11 +68,37 @@ export default () => {
   // commit - can change stuff in your state
   // dispatch - calls functions in your state
 
-  state.person.name // Jane
+  // vuex like mapGetters & mapActions
+  const { name } = mapGetters({ name: 'jane/name' })
+  const { makeJaneHappy } = mapActions({ makeJaneHappy: 'jane/makeHerHappy' })
+
+  // useModule hook
+  // allows you to get all the methods & state from some module
+  // WARNING methods with the same keys as state are going to be overrided by state
+  const jane = useModule('jane')
+
+  // constant "jane" is an object that has inside:
+  {
+    name: 'Jane',
+    age: 19,
+    makeHerHappy: function,
+  }
+  // you can specify noMerge and then you'll see it like this:
+  {
+    state: {
+      name: 'Jane',
+      age: 19,
+    },
+    methods: {
+      makeHerHappy: function,
+    },
+  }
+
+  state.jane.name // Jane
   setName('Jane')
   makeJaneHappy()
-  commit('person/name', 'Emma')
-  dispatch('person/makeHerHappy', "<Your Params>")
+  commit('jane/name', 'Emma')
+  dispatch('jane/makeHerHappy', "<Your Params>")
 }
 ```
 
