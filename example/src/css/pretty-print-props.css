@@ -1,0 +1,38 @@
+.list {
+  width: 300px;
+  margin: 20px 0;
+  border-radius: 3px;
+}
+
+.item {
+  background-color: #fff;
+  color: #444;
+  padding: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-gap: 10px;
+}
+
+.item:last-child {
+  border-left: 0;
+}
+
+.key {
+  color: #3ac184;
+}
+
+.value {
+  color: #c71d4b;
+}
+
+.is-action {
+  border-left: 3px solid #4cd2a7;
+  cursor: pointer;
+}
+
+.pretty-props-label {
+  margin-bottom: 5px;
+  font-size: 16px;
+}

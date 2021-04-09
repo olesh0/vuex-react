@@ -6,6 +6,7 @@
 body {
   padding: 1rem;
   font: 14px 'PT Sans', Arial, Tahoma;
+  cursor: default;
 }
 
 div.paddings {
@@ -28,7 +29,7 @@ h2, h3 {
   grid-template-rows: auto 1fr;
   grid-gap: 20px;
 
-  grid-template-areas: "controls controls" "firstChildrenComponent secondChildrenComponent";
+  grid-template-areas: "controls controls" "firstChildrenComponent secondChildrenComponent" "mappedControls mappedControls";
 }
 
 .examples-wrapper .area-controls {
@@ -41,6 +42,10 @@ h2, h3 {
 
 .examples-wrapper .area-second-component {
   grid-area: secondChildrenComponent;
+}
+
+.examples-wrapper .mapped-controls {
+  grid-area: mappedControls;
 }
 
 .controls-list {

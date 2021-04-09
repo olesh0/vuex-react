@@ -52,7 +52,7 @@ export const mapActions = (actionsPaths) => {
   const actions = {}
 
   Object.keys(actionsPaths).forEach((actionKey) => {
-    const actionPath = actionsPaths[actionKey]
+    const actionPath = actionsPaths[actionKey].split('/').join('.')
 
     actions[actionKey] = (argument) => _.get(methods, actionPath)({ dispatch, commit }, argument)
   })
@@ -65,7 +65,7 @@ export const mapGetters = (gettersPaths) => {
   const mappedState = {}
 
   Object.keys(gettersPaths).forEach((getterKey) => {
-    const getterPath = gettersPaths[getterKey]
+    const getterPath = gettersPaths[getterKey].split('/').join('.')
 
     mappedState[getterKey] = _.get(state, getterPath)
   })
@@ -91,6 +91,22 @@ export const useModule = (module, options = {}) => {
     ...moduleState,
   }
 }
+
+export const mapToProps = (mappingOptions) =>
+  (Component) =>
+    (props) => {
+      const state = mapGetters(mappingOptions.state || {})
+      const methods = mapActions(mappingOptions.actions || {})
+
+      return (
+        <Component
+          {...state}
+          {...methods}
+          {...props}
+        />
+      )
+    }
+
 
 export const Provider = ({ store: modules, children }) => {
   const { state: generatedState, methods } = generateState(modules)

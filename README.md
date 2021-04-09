@@ -41,7 +41,7 @@ export default () => {
 ```
 
 
-##### Then you case the store in your child components like this:
+##### Then you use the store in your child components like this:
 ```jsx
 import React from 'react'
 import {
