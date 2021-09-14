@@ -8,10 +8,7 @@ const generateState = (modules) => {
   const state = {}
 
   Object.keys(modules).forEach((moduleName) => {
-    const {
-      actions,
-      state: moduleState,
-    } = modules[moduleName]
+    const { actions, state: moduleState } = modules[moduleName]
 
     methods[moduleName] = actions ?? {}
     state[moduleName] = moduleState
@@ -19,7 +16,7 @@ const generateState = (modules) => {
 
   return {
     methods,
-    state,
+    state
   }
 }
 
@@ -32,7 +29,7 @@ export const useGetter = (statePath) => {
 
     return [
       value,
-      (newValue) => updateState({ ..._.set(state, _statePath, newValue) }),
+      (newValue) => updateState({ ..._.set(state, _statePath, newValue) })
     ]
   } catch (e) {
     console.error(e)
@@ -44,7 +41,8 @@ export const useGetter = (statePath) => {
 export const useAction = (actionPath) => {
   const { methods, commit, dispatch } = useContext(StoreContext)
 
-  return () => _.get(methods, actionPath.split('/').join('.'))({ commit, dispatch })
+  return () =>
+    _.get(methods, actionPath.split('/').join('.'))({ commit, dispatch })
 }
 
 export const mapActions = (actionsPaths) => {
@@ -54,7 +52,8 @@ export const mapActions = (actionsPaths) => {
   Object.keys(actionsPaths).forEach((actionKey) => {
     const actionPath = actionsPaths[actionKey].split('/').join('.')
 
-    actions[actionKey] = (argument) => _.get(methods, actionPath)({ dispatch, commit }, argument)
+    actions[actionKey] = (argument) =>
+      _.get(methods, actionPath)({ dispatch, commit }, argument)
   })
 
   return actions
@@ -82,31 +81,22 @@ export const useModule = (module, options = {}) => {
   if (options.zeroMerge) {
     return {
       state: moduleState,
-      methods: moduleMethods,
+      methods: moduleMethods
     }
   }
 
   return {
     ...moduleMethods,
-    ...moduleState,
+    ...moduleState
   }
 }
 
-export const mapToProps = (mappingOptions) =>
-  (Component) =>
-    (props) => {
-      const state = mapGetters(mappingOptions.state || {})
-      const methods = mapActions(mappingOptions.actions || {})
+export const mapToProps = (mappingOptions) => (Component) => (props) => {
+  const state = mapGetters(mappingOptions.state || {})
+  const methods = mapActions(mappingOptions.actions || {})
 
-      return (
-        <Component
-          {...state}
-          {...methods}
-          {...props}
-        />
-      )
-    }
-
+  return <Component {...state} {...methods} {...props} />
+}
 
 export const Provider = ({ store: modules, children }) => {
   const { state: generatedState, methods } = generateState(modules)
@@ -132,7 +122,7 @@ export const Provider = ({ store: modules, children }) => {
         methods,
         updateState: setState,
         commit,
-        dispatch,
+        dispatch
       }}
     >
       {children}
