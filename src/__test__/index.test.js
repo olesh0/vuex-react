@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Adapter from 'enzyme-adapter-react-16'
 import { sample } from 'lodash'
 import { mount, configure } from 'enzyme'
